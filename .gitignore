@@ -1,0 +1,17 @@
+### AndroidStudio ###
+.idea/
+.gradle/
+/bin/
+/out/
+/build/
+/captures/
+local.properties
+
+### Files ###
+*.aab
+*.apk
+*.class
+*.iml
+*.jks
+*.keystore
+*.log
