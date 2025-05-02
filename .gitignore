@@ -1,10 +1,10 @@
 ### AndroidStudio ###
 .idea/
 .gradle/
-/bin/
-/out/
-/build/
-/captures/
+bin/
+out/
+build/
+captures/
 local.properties
 
 ### Files ###

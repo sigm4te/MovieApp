@@ -12,14 +12,28 @@ android {
         targetSdk 35
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        android.buildFeatures.buildConfig true
     }
 
     buildTypes {
+        configureEach {
+            buildConfigField "boolean", "LOG_ERROR", "true"
+            buildConfigField "boolean", "LOG_FATAL", "true"
+        }
+        debug {
+            buildConfigField "boolean", "LOG_VERBOSE", "true"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "LOG_INFO", "true"
+            buildConfigField "boolean", "LOG_WARN", "true"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "LOG_VERBOSE", "false"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "LOG_INFO", "false"
+            buildConfigField "boolean", "LOG_WARN", "false"
         }
     }
     compileOptions {
@@ -29,8 +43,22 @@ android {
 }
 
 dependencies {
+    // Android
     implementation libs.appcompat
-    implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+    implementation libs.recyclerview
+    implementation libs.material
+    // Navigation
+    implementation libs.moxy
+    implementation libs.moxy.androidx
+    annotationProcessor libs.moxy.compiler
+    implementation libs.cicerone
+    // RxJava
+    implementation libs.rxjava
+    implementation libs.rxandroid
+    // Retrofit
+    implementation libs.retrofit
+    implementation libs.retrofit.adapter.rxjava3
+    implementation libs.retrofit.converter.gson
 }
