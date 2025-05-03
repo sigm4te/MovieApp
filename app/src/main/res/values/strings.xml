@@ -2,8 +2,13 @@
     <!-- Application -->
     <string name="app_name">MovieApp</string>
 
-    <!-- Search -->
-    <string name="search_label">Enter a movie name:</string>
-    <string name="search_button">Search</string>
+    <!-- Search Page -->
+    <string name="search_page_label">Enter a movie name:</string>
+    <string name="search_page_button">Search</string>
 
+    <!-- Search Result -->
+    <string name="search_result_poster_label">Poster</string>
+    <string name="search_result_title_label">Title</string>
+    <string name="search_result_type_label">Type</string>
+    <string name="search_result_year_label">Year</string>
 </resources>

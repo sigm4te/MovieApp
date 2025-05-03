@@ -1,0 +1,9 @@
+package com.example.movieapp.mvp.model.repository;
+
+import com.example.movieapp.mvp.model.api.dto.Search;
+
+import io.reactivex.rxjava3.core.Single;
+
+public interface ISearchResultRepo {
+    Single<Search> getSearch(String query);
+}

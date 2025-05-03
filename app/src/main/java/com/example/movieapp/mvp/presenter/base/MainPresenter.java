@@ -21,7 +21,7 @@ public class MainPresenter extends MvpPresenter<IMainView> {
     protected void onFirstViewAttach() {
         Logger.logV(null);
         super.onFirstViewAttach();
-        router.replaceScreen(new Screens.SearchScreen());
+        router.replaceScreen(new Screens.SearchPageScreen());
     }
 
     public void backClicked() {

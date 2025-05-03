@@ -45,13 +45,13 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView {
     }
 
     private void initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
     }
 
     private void initNavigator() {
         navigatorHolder = MovieApp.instance.getNavigatorHolder();
-        navigator = new AppNavigator(this, R.id.container, getSupportFragmentManager());
+        navigator = new AppNavigator(this, R.id.container_main, getSupportFragmentManager());
     }
 
     @Override

@@ -18,6 +18,8 @@ android {
 
     buildTypes {
         configureEach {
+            buildConfigField "String", "API_URL", "\"${API_URL}\""
+            buildConfigField "String", "API_KEY", "\"${API_KEY}\""
             buildConfigField "boolean", "LOG_ERROR", "true"
             buildConfigField "boolean", "LOG_FATAL", "true"
         }
@@ -61,4 +63,6 @@ dependencies {
     implementation libs.retrofit
     implementation libs.retrofit.adapter.rxjava3
     implementation libs.retrofit.converter.gson
+    // Image Loading
+    implementation libs.glide
 }

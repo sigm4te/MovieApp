@@ -10,7 +10,7 @@ cicerone = "6.6"
 rxjava = "3.1.10"
 rxandroid = "3.0.2"
 retrofit = "2.11.0"
-
+glide = "5.0.0-rc01"
 
 [libraries]
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -27,7 +27,7 @@ rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-adapter-rxjava3 = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

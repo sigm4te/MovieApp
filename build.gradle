@@ -1,3 +1,12 @@
 plugins {
     alias(libs.plugins.android.application) apply false
 }
+
+Properties properties = new Properties()
+File localProperties = rootProject.file("local.properties")
+if (localProperties.exists()) properties.load(localProperties.newDataInputStream())
+
+ext {
+    API_URL = (properties.getProperty("api.url") != null) ? properties.getProperty("api.url") : ""
+    API_KEY = (properties.getProperty("api.key") != null) ? properties.getProperty("api.key") : ""
+}
