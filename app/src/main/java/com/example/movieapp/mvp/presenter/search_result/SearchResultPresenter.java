@@ -44,6 +44,8 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
         public void onItemClick(ISearchResultItemView view) {
             int index = view.getPos();
             Logger.logD("index = " + index);
+            String id = searchResultList.get(index).getId();
+            router.navigateTo(new Screens.MoviePageScreen(id));
         }
 
         @Override
