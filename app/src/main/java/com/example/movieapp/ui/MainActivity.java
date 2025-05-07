@@ -13,27 +13,21 @@ import com.example.movieapp.mvp.view.base.IMainView;
 import com.example.movieapp.utils.log.Logger;
 import com.github.terrakok.cicerone.Navigator;
 import com.github.terrakok.cicerone.NavigatorHolder;
-import com.github.terrakok.cicerone.Router;
 import com.github.terrakok.cicerone.androidx.AppNavigator;
+
+import javax.inject.Inject;
 
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
 
 public class MainActivity extends MvpAppCompatActivity implements IMainView {
 
-    private NavigatorHolder navigatorHolder;
-    private Navigator navigator;
+    @Inject
+    NavigatorHolder navigatorHolder;
+    Navigator navigator;
 
     @InjectPresenter
     MainPresenter presenter;
-
-    @ProvidePresenter
-    MainPresenter provideMainPresenter() {
-        Logger.logV(null);
-        Router router = MovieApp.instance.getRouter();
-        return new MainPresenter(router);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +36,7 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView {
         initToolbar();
         initNavigator();
         setContentView(R.layout.activity_main);
+        MovieApp.instance.getAppComponent().inject(this);
     }
 
     private void initToolbar() {
@@ -50,7 +45,6 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView {
     }
 
     private void initNavigator() {
-        navigatorHolder = MovieApp.instance.getNavigatorHolder();
         navigator = new AppNavigator(this, R.id.container_main, getSupportFragmentManager());
     }
 

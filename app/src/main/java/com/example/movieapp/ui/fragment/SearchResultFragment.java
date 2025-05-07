@@ -13,17 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.R;
-import com.example.movieapp.mvp.model.repository.ISearchResultRepo;
-import com.example.movieapp.mvp.model.repository.retrofit.RetrofitSearchResultRepo;
 import com.example.movieapp.mvp.presenter.search_result.SearchResultPresenter;
 import com.example.movieapp.mvp.view.search_result.ISearchResultView;
 import com.example.movieapp.navigation.Screens;
 import com.example.movieapp.ui.BackButtonListener;
 import com.example.movieapp.ui.adapter.SearchResultAdapter;
 import com.example.movieapp.utils.log.Logger;
-import com.github.terrakok.cicerone.Router;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -40,11 +36,9 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     @ProvidePresenter
     SearchResultPresenter provideSearchResultPresenter() {
         Logger.logV(null);
-        ISearchResultRepo searchResultRepo = new RetrofitSearchResultRepo(MovieApp.instance.getApi());
-        Router router = MovieApp.instance.getRouter();
         assert getArguments() != null;
         String query = getArguments().getString(Screens.QUERY_STRING_ARG);
-        return new SearchResultPresenter(AndroidSchedulers.mainThread(), router, searchResultRepo, query);
+        return new SearchResultPresenter(query);
     }
 
     @Nullable
@@ -70,6 +64,11 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     @Override
     public void updateData() {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void release() {
+        MovieApp.instance.releaseSearchResultSubcomponent();
     }
 
     @Override

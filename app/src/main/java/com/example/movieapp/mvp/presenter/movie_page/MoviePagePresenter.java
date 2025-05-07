@@ -2,27 +2,32 @@ package com.example.movieapp.mvp.presenter.movie_page;
 
 import android.annotation.SuppressLint;
 
+import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.mvp.model.repository.IMoviePageRepo;
 import com.example.movieapp.mvp.presenter.base.ViewModelMapper;
 import com.example.movieapp.mvp.view.movie_page.IMoviePageView;
 import com.example.movieapp.utils.log.Logger;
 import com.github.terrakok.cicerone.Router;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Scheduler;
 import moxy.MvpPresenter;
 
 public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
 
-    private final Scheduler scheduler;
-    private final Router router;
-    private final IMoviePageRepo moviePageRepo;
+    @Inject
+    Scheduler scheduler;
+    @Inject
+    Router router;
+    @Inject
+    IMoviePageRepo moviePageRepo;
+
     private final String id;
 
-    public MoviePagePresenter(Scheduler scheduler, Router router, IMoviePageRepo moviePageRepo, String id) {
-        this.scheduler = scheduler;
-        this.router = router;
-        this.moviePageRepo = moviePageRepo;
+    public MoviePagePresenter(String id) {
         this.id = id;
+        MovieApp.instance.getMoviePageSubcomponent().inject(this);
     }
 
     @Override
@@ -31,6 +36,13 @@ public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
         Logger.logV(null);
         getViewState().init();
         setData();
+    }
+
+    @Override
+    public void onDestroy() {
+        Logger.logV(null);
+        super.onDestroy();
+        getViewState().release();
     }
 
     @SuppressLint("CheckResult")

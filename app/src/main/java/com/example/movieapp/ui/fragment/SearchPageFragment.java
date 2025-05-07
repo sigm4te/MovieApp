@@ -16,11 +16,9 @@ import com.example.movieapp.mvp.presenter.search_page.SearchPagePresenter;
 import com.example.movieapp.mvp.view.search_page.ISearchPageView;
 import com.example.movieapp.ui.BackButtonListener;
 import com.example.movieapp.utils.log.Logger;
-import com.github.terrakok.cicerone.Router;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
 
 public class SearchPageFragment extends MvpAppCompatFragment implements ISearchPageView, BackButtonListener {
 
@@ -30,13 +28,6 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
 
     @InjectPresenter
     SearchPagePresenter presenter;
-
-    @ProvidePresenter
-    SearchPagePresenter provideSearchPagePresenter() {
-        Logger.logV(null);
-        Router router = MovieApp.instance.getRouter();
-        return new SearchPagePresenter(router);
-    }
 
     @Nullable
     @Override
@@ -53,6 +44,11 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
         button = view.findViewById(R.id.btn_search);
         initListeners();
         Logger.logV("completed");
+    }
+
+    @Override
+    public void release() {
+        MovieApp.instance.releaseSearchPageSubcomponent();
     }
 
     private void initListeners() {

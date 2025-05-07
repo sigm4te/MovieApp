@@ -6,7 +6,7 @@
     <string name="search_page_label">Enter a movie name:</string>
     <string name="search_page_button">Search</string>
 
-    <!-- Movie Page -->
+    <!-- Search Result / Movie Page -->
     <string name="movie_page_title_label">Title</string>
     <string name="movie_page_poster_label">Poster</string>
     <string name="movie_page_type_label">Type</string>

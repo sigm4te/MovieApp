@@ -12,8 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.example.movieapp.R;
 import com.example.movieapp.app.MovieApp;
-import com.example.movieapp.mvp.model.repository.IMoviePageRepo;
-import com.example.movieapp.mvp.model.repository.retrofit.RetrofitMoviePageRepo;
 import com.example.movieapp.mvp.presenter.movie_page.MoviePagePresenter;
 import com.example.movieapp.mvp.view.movie_page.IMoviePageView;
 import com.example.movieapp.mvp.view.movie_page.MovieViewModel;
@@ -22,9 +20,7 @@ import com.example.movieapp.ui.BackButtonListener;
 import com.example.movieapp.utils.image.GlideImageLoader;
 import com.example.movieapp.utils.image.IImageLoader;
 import com.example.movieapp.utils.log.Logger;
-import com.github.terrakok.cicerone.Router;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -49,11 +45,9 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
     @ProvidePresenter
     MoviePagePresenter provideMoviePagePresenter() {
         Logger.logV(null);
-        IMoviePageRepo moviePageRepo = new RetrofitMoviePageRepo(MovieApp.instance.getApi());
-        Router router = MovieApp.instance.getRouter();
         assert getArguments() != null;
         String id = getArguments().getString(Screens.MOVIE_ID_ARG);
-        return new MoviePagePresenter(AndroidSchedulers.mainThread(), router, moviePageRepo, id);
+        return new MoviePagePresenter(id);
     }
 
     @Nullable
@@ -89,6 +83,11 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
         directorTextView.setText(movie.director);
         ratingTextView.setText(movie.rating);
         plotTextView.setText(movie.plot);
+    }
+
+    @Override
+    public void release() {
+        MovieApp.instance.releaseMoviePageSubcomponent();
     }
 
     @Override

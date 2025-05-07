@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.2"
+agp = "8.10.0"
 appcompat = "1.7.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
@@ -10,6 +10,7 @@ cicerone = "6.6"
 rxjava = "3.1.10"
 rxandroid = "3.0.2"
 retrofit = "2.11.0"
+dagger = "2.56.2"
 glide = "5.0.0-rc01"
 
 [libraries]
@@ -27,6 +28,8 @@ rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-adapter-rxjava3 = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 
 [plugins]

@@ -6,15 +6,12 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 import com.example.movieapp.utils.Converter;
-import com.example.movieapp.utils.log.Logger;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.reactivex.rxjava3.core.Observable;
 
 public class SearchResultItem implements Parcelable {
-
-    private static final String NO_RESULT = "No Result";
 
     @SerializedName("imdbID")
     @Expose
@@ -42,11 +39,6 @@ public class SearchResultItem implements Parcelable {
         this.type = type;
         this.year = year;
         this.imageUrl = imageUrl;
-    }
-
-    public SearchResultItem() {
-        Logger.logV(NO_RESULT);
-        new SearchResultItem(null, NO_RESULT, null, null, null);
     }
 
     protected SearchResultItem(Parcel in) {

@@ -1,20 +1,24 @@
 package com.example.movieapp.mvp.presenter.base;
 
+import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.mvp.view.base.IMainView;
 import com.example.movieapp.navigation.Screens;
 import com.example.movieapp.utils.log.Logger;
 import com.github.terrakok.cicerone.Router;
 
+import javax.inject.Inject;
+
 import moxy.MvpPresenter;
 
 public class MainPresenter extends MvpPresenter<IMainView> {
 
-    private final Router router;
+    @Inject
+    Router router;
 
-    public MainPresenter (Router router) {
+    public MainPresenter () {
         super();
         Logger.logV(null);
-        this.router = router;
+        MovieApp.instance.getAppComponent().inject(this);
     }
 
     @Override

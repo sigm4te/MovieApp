@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 
+import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.mvp.model.repository.ISearchResultRepo;
 import com.example.movieapp.mvp.model.api.dto.SearchResultItem;
 import com.example.movieapp.mvp.presenter.base.ViewModelMapper;
@@ -18,6 +19,8 @@ import com.github.terrakok.cicerone.Router;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -25,16 +28,20 @@ import moxy.MvpPresenter;
 
 public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
 
-    private final Scheduler scheduler;
-    private final Router router;
-    private final ISearchResultRepo searchResultRepo;
+    private static final String NO_RESULT = "No Result";
+
+    @Inject
+    Scheduler scheduler;
+    @Inject
+    Router router;
+    @Inject
+    ISearchResultRepo searchResultRepo;
+
     private final String query;
 
-    public SearchResultPresenter(Scheduler scheduler, Router router, ISearchResultRepo searchResultRepo, String query) {
-        this.scheduler = scheduler;
-        this.router = router;
-        this.searchResultRepo = searchResultRepo;
+    public SearchResultPresenter(String query) {
         this.query = query;
+        MovieApp.instance.getSearchResultSubcomponent().inject(this);
     }
 
     private class SearchResultListPresenter implements ISearchResultListPresenter {
@@ -45,7 +52,9 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
             int index = view.getPos();
             Logger.logD("index = " + index);
             String id = searchResultList.get(index).getId();
-            router.navigateTo(new Screens.MoviePageScreen(id));
+            if (id != null) {
+                router.navigateTo(new Screens.MoviePageScreen(id));
+            }
         }
 
         @Override
@@ -69,6 +78,13 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
         setData();
     }
 
+    @Override
+    public void onDestroy() {
+        Logger.logV(null);
+        super.onDestroy();
+        getViewState().release();
+    }
+
     private void setRecyclerData(ISearchResultItemView view, SearchResultItem searchResultItem) {
         Logger.logV(null);
         searchResultItem.getTitleObservable().subscribe(new Observer<String>() {
@@ -78,9 +94,9 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
             }
 
             @Override
-            public void onNext(@NonNull String name) {
+            public void onNext(@NonNull String title) {
+                Logger.logD(String.format("title = %s", title));
                 view.setSearchResultItem(ViewModelMapper.mapSearchResultItem(searchResultItem));
-                Logger.logD(String.format("name = %s", name));
             }
 
             @Override
@@ -101,10 +117,9 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
         Logger.logV(null);
         searchResultRepo.getSearch(query).observeOn(scheduler).subscribe(
                 (search) -> {
-                    Logger.logD(String.format("search size = %s", search.getItems().size()));
                     searchResultListPresenter.searchResultList.clear();
                     if (search.getItems() == null) {
-                        searchResultListPresenter.searchResultList.add(new SearchResultItem());
+                        searchResultListPresenter.searchResultList.add(new SearchResultItem(null, NO_RESULT, null, null, null));
                     } else {
                         searchResultListPresenter.searchResultList.addAll(search.getItems());
                     }
