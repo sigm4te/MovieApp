@@ -46,16 +46,33 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
         Logger.logV("completed");
     }
 
-    @Override
-    public void release() {
-        MovieApp.instance.releaseSearchPageSubcomponent();
-    }
-
     private void initListeners() {
         button.setOnClickListener((view) -> {
             String query = searchView.getQuery().toString();
-            presenter.getPresenter().onClick(query);
+            startSearch(query);
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                startSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+    private void startSearch(String query) {
+        presenter.getPresenter().onClick(query);
+    }
+
+    @Override
+    public void release() {
+        MovieApp.instance.releaseSearchPageSubcomponent();
     }
 
     @Override

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/base_margin"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +15,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -22,44 +24,63 @@
                 android:id="@+id/tv_movie_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/movie_page_title_size"
                 tools:text="@string/movie_page_title_label" />
 
             <TextView
                 android:id="@+id/tv_movie_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin"
+                android:textSize="@dimen/movie_page_text_size"
                 tools:text="@string/movie_page_type_label" />
 
-            <TextView
-                android:id="@+id/tv_movie_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@string/movie_page_year_label" />
 
-            <TextView
-                android:id="@+id/tv_movie_country"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/movie_page_country_label" />
+                android:layout_margin="@dimen/base_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_movie_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/movie_page_text_size"
+                    tools:text="@string/movie_page_year_label" />
+
+                <TextView
+                    android:id="@+id/tv_movie_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/base_margin"
+                    android:textSize="@dimen/movie_page_text_size"
+                    tools:text="@string/movie_page_country_label" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_movie_director"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin"
+                android:textSize="@dimen/movie_page_text_size"
                 tools:text="@string/movie_page_director_label" />
 
             <TextView
                 android:id="@+id/tv_movie_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin"
+                android:textSize="@dimen/movie_page_rating_size"
                 tools:text="@string/movie_page_rating_label" />
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_movie_poster"
-            android:layout_width="100dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/movie_page_poster_width"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/base_margin"
             android:contentDescription="@string/movie_page_poster_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -70,6 +91,8 @@
         android:id="@+id/tv_movie_plot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"
+        android:textSize="@dimen/movie_page_plot_size"
         tools:text="@string/movie_page_plot_label" />
 
 </LinearLayout>

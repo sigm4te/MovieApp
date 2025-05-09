@@ -6,6 +6,7 @@ import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.mvp.model.repository.IMoviePageRepo;
 import com.example.movieapp.mvp.presenter.base.ViewModelMapper;
 import com.example.movieapp.mvp.view.movie_page.IMoviePageView;
+import com.example.movieapp.navigation.Screens;
 import com.example.movieapp.utils.log.Logger;
 import com.github.terrakok.cicerone.Router;
 
@@ -24,6 +25,7 @@ public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
     IMoviePageRepo moviePageRepo;
 
     private final String id;
+    private String imageUrl;
 
     public MoviePagePresenter(String id) {
         this.id = id;
@@ -51,11 +53,18 @@ public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
         moviePageRepo.getMovie(id).observeOn(scheduler).subscribe(
                 (movie) -> {
                     getViewState().setData(ViewModelMapper.mapMovie(movie));
+                    imageUrl = movie.getImageUrl();
                 },
                 (e) -> {
                     Logger.logE(String.format("error = %s", e.getMessage()));
                 }
         );
+    }
+
+    public void onImageClick() {
+        if (imageUrl != null) {
+            router.navigateTo(new Screens.PosterPageScreen(imageUrl));
+        }
     }
 
     public boolean backPressed() {
