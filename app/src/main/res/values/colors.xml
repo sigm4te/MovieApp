@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Application Icon Colors -->
+    <color name="colorIconBackground">#E3F2FD</color>
+    <color name="colorIconBase">#222222</color>
+    <color name="colorIconAccent">#1E88E5</color>
+    <!-- Base Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 

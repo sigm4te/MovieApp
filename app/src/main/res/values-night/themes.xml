@@ -1,4 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme -->
+    <!-- Base Application Theme -->
     <style name="Base.Theme.MovieApp" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar" />
 </resources>
