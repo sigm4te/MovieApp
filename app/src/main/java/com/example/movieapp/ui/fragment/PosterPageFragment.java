@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.movieapp.R;
+import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.mvp.presenter.poster_page.PosterPagePresenter;
 import com.example.movieapp.mvp.view.poster_page.IPosterPageView;
 import com.example.movieapp.navigation.Screens;
@@ -58,6 +59,11 @@ public class PosterPageFragment extends MvpAppCompatFragment implements IPosterP
     public void setImage(String imageUrl) {
         Logger.logV(null);
         imageLoader.loadImage(imageUrl, posterImageView);
+    }
+
+    @Override
+    public void release() {
+        MovieApp.instance.releaseSearchSubcomponent();
     }
 
     @Override

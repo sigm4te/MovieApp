@@ -7,4 +7,5 @@ import moxy.viewstate.strategy.alias.AddToEndSingle;
 public interface IPosterPageView extends MvpView {
     void init();
     void setImage(String imageUrl);
+    void release();
 }

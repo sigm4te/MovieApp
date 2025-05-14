@@ -68,7 +68,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         }
 
         @Override
-        public void setSearchResultItem(SearchResultItemViewModel searchResultItem) {
+        public void setData(SearchResultItemViewModel searchResultItem) {
             titleView.setText(searchResultItem.title);
             typeView.setText(searchResultItem.type);
             yearView.setText(searchResultItem.year);

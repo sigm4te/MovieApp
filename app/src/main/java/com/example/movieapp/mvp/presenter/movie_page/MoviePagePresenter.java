@@ -3,7 +3,7 @@ package com.example.movieapp.mvp.presenter.movie_page;
 import android.annotation.SuppressLint;
 
 import com.example.movieapp.app.MovieApp;
-import com.example.movieapp.mvp.model.repository.IMoviePageRepo;
+import com.example.movieapp.mvp.model.repository.IMovieRepo;
 import com.example.movieapp.mvp.presenter.base.ViewModelMapper;
 import com.example.movieapp.mvp.view.movie_page.IMoviePageView;
 import com.example.movieapp.navigation.Screens;
@@ -22,14 +22,14 @@ public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
     @Inject
     Router router;
     @Inject
-    IMoviePageRepo moviePageRepo;
+    IMovieRepo movieRepo;
 
     private final String id;
     private String imageUrl;
 
     public MoviePagePresenter(String id) {
         this.id = id;
-        MovieApp.instance.getMoviePageSubcomponent().inject(this);
+        MovieApp.instance.getMovieSubcomponent().inject(this);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
     @SuppressLint("CheckResult")
     private void setData() {
         Logger.logV(null);
-        moviePageRepo.getMovie(id).observeOn(scheduler).subscribe(
+        movieRepo.getMovie(id).observeOn(scheduler).subscribe(
                 (movie) -> {
                     getViewState().setData(ViewModelMapper.mapMovie(movie));
                     imageUrl = movie.getImageUrl();

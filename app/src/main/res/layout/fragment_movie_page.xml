@@ -79,7 +79,7 @@
         <ImageView
             android:id="@+id/iv_movie_poster"
             android:layout_width="@dimen/movie_page_poster_width"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/movie_page_poster_height"
             android:layout_margin="@dimen/base_margin"
             android:contentDescription="@string/movie_page_poster_label"
             app:layout_constraintEnd_toEndOf="parent"

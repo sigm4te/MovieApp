@@ -10,13 +10,14 @@
     <!-- Search Result -->
     <!-- widths, heights -->
     <dimen name="search_result_item_height">100dp</dimen>
+    <dimen name="search_result_poster_height">90dp</dimen>
     <dimen name="search_result_poster_width">60dp</dimen>
     <!-- text -->
     <dimen name="search_result_title_size">18sp</dimen>
     <dimen name="search_result_text_size">10sp</dimen>
-
     <!-- Movie Page -->
     <!-- widths, heights -->
+    <dimen name="movie_page_poster_height">150dp</dimen>
     <dimen name="movie_page_poster_width">100dp</dimen>
     <!-- text -->
     <dimen name="movie_page_title_size">20sp</dimen>

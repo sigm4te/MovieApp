@@ -2,6 +2,8 @@ package com.example.movieapp.di.base;
 
 import com.example.movieapp.BuildConfig;
 import com.example.movieapp.mvp.model.api.IDataSource;
+import com.example.movieapp.mvp.model.network.INetworkStatus;
+import com.example.movieapp.utils.network.AndroidNetworkStatus;
 import com.example.movieapp.utils.api.ApiKeyInterceptor;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -53,5 +55,11 @@ public class ApiModule {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(IDataSource.class);
+    }
+
+    @Singleton
+    @Provides
+    INetworkStatus networkStatus() {
+        return new AndroidNetworkStatus();
     }
 }

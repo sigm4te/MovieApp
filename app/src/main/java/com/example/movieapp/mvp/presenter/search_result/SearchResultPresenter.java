@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 
 import com.example.movieapp.app.MovieApp;
-import com.example.movieapp.mvp.model.repository.ISearchResultRepo;
+import com.example.movieapp.mvp.model.repository.ISearchRepo;
 import com.example.movieapp.mvp.model.api.dto.SearchResultItem;
 import com.example.movieapp.mvp.presenter.base.ViewModelMapper;
 import com.example.movieapp.mvp.presenter.search_result.list.ISearchResultListPresenter;
@@ -35,13 +35,13 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
     @Inject
     Router router;
     @Inject
-    ISearchResultRepo searchResultRepo;
+    ISearchRepo searchRepo;
 
     private final String query;
 
     public SearchResultPresenter(String query) {
         this.query = query;
-        MovieApp.instance.getSearchResultSubcomponent().inject(this);
+        MovieApp.instance.getSearchSubcomponent().inject(this);
     }
 
     private class SearchResultListPresenter implements ISearchResultListPresenter {
@@ -86,17 +86,14 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
     }
 
     private void setRecyclerData(ISearchResultItemView view, SearchResultItem searchResultItem) {
-        Logger.logV(null);
         searchResultItem.getTitleObservable().subscribe(new Observer<String>() {
             @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                Logger.logD(null);
-            }
+            public void onSubscribe(@NonNull Disposable d) {}
 
             @Override
             public void onNext(@NonNull String title) {
                 Logger.logD(String.format("title = %s", title));
-                view.setSearchResultItem(ViewModelMapper.mapSearchResultItem(searchResultItem));
+                view.setData(ViewModelMapper.mapSearchResultItem(searchResultItem));
             }
 
             @Override
@@ -105,9 +102,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
             }
 
             @Override
-            public void onComplete() {
-                Logger.logD(null);
-            }
+            public void onComplete() {}
         });
     }
 
@@ -115,7 +110,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
     @UiThread
     private void setData() {
         Logger.logV(null);
-        searchResultRepo.getSearch(query).observeOn(scheduler).subscribe(
+        searchRepo.getSearch(query).observeOn(scheduler).subscribe(
                 (search) -> {
                     searchResultListPresenter.searchResultList.clear();
                     if (search.getItems() == null) {

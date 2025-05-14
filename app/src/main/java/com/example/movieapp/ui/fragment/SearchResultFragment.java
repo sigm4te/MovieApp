@@ -68,7 +68,7 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
 
     @Override
     public void release() {
-        MovieApp.instance.releaseSearchResultSubcomponent();
+        MovieApp.instance.releaseSearchSubcomponent();
     }
 
     @Override

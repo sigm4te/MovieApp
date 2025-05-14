@@ -94,7 +94,7 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
 
     @Override
     public void release() {
-        MovieApp.instance.releaseMoviePageSubcomponent();
+        MovieApp.instance.releaseMovieSubcomponent();
     }
 
     @Override
