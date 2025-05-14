@@ -1,13 +1,13 @@
-package com.example.movieapp.di.movie_page;
+package com.example.movieapp.di.movie;
 
 import com.example.movieapp.mvp.presenter.movie_page.MoviePagePresenter;
 import com.example.movieapp.mvp.presenter.poster_page.PosterPagePresenter;
 
 import dagger.Subcomponent;
 
-@MoviePageScope
-@Subcomponent(modules = MoviePageModule.class)
-public interface MoviePageSubcomponent {
+@MovieScope
+@Subcomponent(modules = MovieModule.class)
+public interface MovieSubcomponent {
 
     void inject(MoviePagePresenter moviePagePresenter);
     void inject(PosterPagePresenter posterPagePresenter);

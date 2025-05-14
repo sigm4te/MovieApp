@@ -11,7 +11,15 @@ public class Search {
     @Expose
     List<SearchResultItem> items;
 
+    public Search(List<SearchResultItem> items) {
+        this.items = items;
+    }
+
     public List<SearchResultItem> getItems() {
         return items;
+    }
+
+    public void setItems(List<SearchResultItem> items) {
+        this.items = items;
     }
 }

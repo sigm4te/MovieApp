@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/iv_search_result_item_poster"
         android:layout_width="@dimen/search_result_poster_width"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/search_result_poster_height"
         android:contentDescription="@string/movie_page_poster_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

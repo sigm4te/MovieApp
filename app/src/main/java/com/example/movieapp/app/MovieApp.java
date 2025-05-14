@@ -5,9 +5,8 @@ import android.app.Application;
 import com.example.movieapp.di.AppComponent;
 import com.example.movieapp.di.DaggerAppComponent;
 import com.example.movieapp.di.base.AppModule;
-import com.example.movieapp.di.movie_page.MoviePageSubcomponent;
-import com.example.movieapp.di.search_page.SearchPageSubcomponent;
-import com.example.movieapp.di.search_result.SearchResultSubcomponent;
+import com.example.movieapp.di.movie.MovieSubcomponent;
+import com.example.movieapp.di.search.SearchSubcomponent;
 import com.example.movieapp.utils.log.Logger;
 import com.google.android.material.color.DynamicColors;
 
@@ -16,9 +15,8 @@ public class MovieApp extends Application {
     public static MovieApp instance;
 
     private AppComponent appComponent;
-    private SearchPageSubcomponent searchPageSubcomponent;
-    private SearchResultSubcomponent searchResultSubcomponent;
-    private MoviePageSubcomponent moviePageSubcomponent;
+    private SearchSubcomponent searchSubcomponent;
+    private MovieSubcomponent movieSubcomponent;
 
     @Override
     public void onCreate() {
@@ -29,66 +27,46 @@ public class MovieApp extends Application {
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
     }
 
-    private void initSearchPageSubcomponent() {
+    private void initSearchSubcomponent() {
         AppComponent appComponent = this.appComponent;
         if (appComponent == null) {
             throw new IllegalStateException("AppComponent must be initialized");
         }
-        this.searchPageSubcomponent = appComponent.searchPageSubcomponent();
+        this.searchSubcomponent = appComponent.searchSubcomponent();
     }
 
-    private void initSearchResultSubcomponent() {
-        SearchPageSubcomponent searchPageSubcomponent = this.searchPageSubcomponent;
-        if (searchPageSubcomponent == null) {
-            initSearchPageSubcomponent();
+    private void initMovieSubcomponent() {
+        SearchSubcomponent searchSubcomponent = this.searchSubcomponent;
+        if (searchSubcomponent == null) {
+            initSearchSubcomponent();
         }
-        assert searchPageSubcomponent != null;
-        this.searchResultSubcomponent = searchPageSubcomponent.searchResultSubcomponent();
+        assert searchSubcomponent != null;
+        this.movieSubcomponent = searchSubcomponent.movieSubcomponent();
     }
 
-    private void initMoviePageSubcomponent() {
-        SearchResultSubcomponent searchResultSubcomponent = this.searchResultSubcomponent;
-        if (searchResultSubcomponent == null) {
-            initSearchResultSubcomponent();
-        }
-        assert searchResultSubcomponent != null;
-        this.moviePageSubcomponent = searchResultSubcomponent.moviePageSubcomponent();
+    public void releaseSearchSubcomponent() {
+        searchSubcomponent = null;
     }
 
-    public void releaseSearchPageSubcomponent() {
-        searchPageSubcomponent = null;
-    }
-
-    public void releaseSearchResultSubcomponent() {
-        searchResultSubcomponent = null;
-    }
-
-    public void releaseMoviePageSubcomponent() {
-        moviePageSubcomponent = null;
+    public void releaseMovieSubcomponent() {
+        movieSubcomponent = null;
     }
 
     public AppComponent getAppComponent() {
         return appComponent;
     }
 
-    public SearchPageSubcomponent getSearchPageSubcomponent() {
-        if (searchPageSubcomponent == null) {
-            initSearchPageSubcomponent();
+    public SearchSubcomponent getSearchSubcomponent() {
+        if (searchSubcomponent == null) {
+            initSearchSubcomponent();
         }
-        return searchPageSubcomponent;
+        return searchSubcomponent;
     }
 
-    public SearchResultSubcomponent getSearchResultSubcomponent() {
-        if (searchResultSubcomponent == null) {
-            initSearchResultSubcomponent();
+    public MovieSubcomponent getMovieSubcomponent() {
+        if (movieSubcomponent == null) {
+            initMovieSubcomponent();
         }
-        return searchResultSubcomponent;
-    }
-
-    public MoviePageSubcomponent getMoviePageSubcomponent() {
-        if (moviePageSubcomponent == null) {
-            initMoviePageSubcomponent();
-        }
-        return moviePageSubcomponent;
+        return movieSubcomponent;
     }
 }

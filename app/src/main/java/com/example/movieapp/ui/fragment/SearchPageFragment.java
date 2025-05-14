@@ -72,7 +72,7 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
 
     @Override
     public void release() {
-        MovieApp.instance.releaseSearchPageSubcomponent();
+        MovieApp.instance.releaseSearchSubcomponent();
     }
 
     @Override

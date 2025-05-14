@@ -66,6 +66,9 @@ dependencies {
     // Dagger 2
     implementation libs.dagger
     annotationProcessor libs.dagger.compiler
+    // Room
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
     // Image Loading
     implementation libs.glide
 }

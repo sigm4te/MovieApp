@@ -17,7 +17,7 @@ public class SearchPagePresenter extends MvpPresenter<ISearchPageView> {
     Router router;
 
     public SearchPagePresenter() {
-        MovieApp.instance.getSearchPageSubcomponent().inject(this);
+        MovieApp.instance.getSearchSubcomponent().inject(this);
     }
 
     private class SearchPageButtonPresenter implements ISearchPageButtonPresenter {

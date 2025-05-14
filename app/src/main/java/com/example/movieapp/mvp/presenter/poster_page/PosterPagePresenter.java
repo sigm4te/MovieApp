@@ -18,7 +18,7 @@ public class PosterPagePresenter extends MvpPresenter<IPosterPageView> {
 
     public PosterPagePresenter(String imageUrl) {
         this.imageUrl = imageUrl;
-        MovieApp.instance.getMoviePageSubcomponent().inject(this);
+        MovieApp.instance.getMovieSubcomponent().inject(this);
     }
 
     @Override
