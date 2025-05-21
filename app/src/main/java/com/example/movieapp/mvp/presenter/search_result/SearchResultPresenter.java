@@ -28,8 +28,6 @@ import moxy.MvpPresenter;
 
 public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
 
-    private static final String NO_RESULT = "No Result";
-
     @Inject
     Scheduler scheduler;
     @Inject
@@ -37,6 +35,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
     @Inject
     ISearchRepo searchRepo;
 
+    private final SearchResultListPresenter searchResultListPresenter = new SearchResultListPresenter();
     private final String query;
 
     public SearchResultPresenter(String query) {
@@ -50,7 +49,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
         @Override
         public void onItemClick(ISearchResultItemView view) {
             int index = view.getPos();
-            Logger.logD("index = " + index);
+            Logger.logD(String.format("index = %s", index));
             String id = searchResultList.get(index).getId();
             if (id != null) {
                 router.navigateTo(new Screens.MoviePageScreen(id));
@@ -110,24 +109,25 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
     @UiThread
     private void setData() {
         Logger.logV(null);
-        searchRepo.getSearch(query).observeOn(scheduler).subscribe(
-                (search) -> {
-                    searchResultListPresenter.searchResultList.clear();
-                    if (search.getItems() == null) {
-                        searchResultListPresenter.searchResultList.add(new SearchResultItem(null, NO_RESULT, null, null, null));
-                    } else {
-                        searchResultListPresenter.searchResultList.addAll(search.getItems());
+        searchResultListPresenter.searchResultList.clear();
+        if (!query.isEmpty()) {
+            searchRepo.getSearch(query).observeOn(scheduler).subscribe(
+                    (search) -> {
+                        searchResultListPresenter.searchResultList.clear();
+                        if (search.isSucceeded()) {
+                            searchResultListPresenter.searchResultList.addAll(search.getItems());
+                        } else {
+                            searchResultListPresenter.searchResultList.add(new SearchResultItem(search.getError()));
+                        }
+                        getViewState().updateData();
+                    },
+                    (e) -> {
+                        Logger.logE(String.format("error = %s", e.getMessage()));
                     }
-                    getViewState().updateData();
-                },
-                (e) -> {
-                    Logger.logE(String.format("error = %s", e.getMessage()));
-                }
-        );
-        getViewState().updateData();
+            );
+            getViewState().updateData();
+        }
     }
-
-    private final SearchResultListPresenter searchResultListPresenter = new SearchResultListPresenter();
 
     public ISearchResultListPresenter getPresenter() {
         return searchResultListPresenter;

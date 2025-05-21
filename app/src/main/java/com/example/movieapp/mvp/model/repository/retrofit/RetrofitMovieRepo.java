@@ -27,7 +27,15 @@ public class RetrofitMovieRepo implements IMovieRepo {
         Logger.logV(null);
         return networkStatus.isOnlineSingle().flatMap((isOnline) -> {
             if (isOnline) {
-                return api.getMovie(id).flatMap((movie) -> cache.putMovie(movie).toSingleDefault(movie));
+                return api.getMovie(id).flatMap(
+                        (movie) -> {
+                            if (movie.getId() != null) {
+                                return cache.putMovie(movie).toSingleDefault(movie);
+                            } else {
+                                return Single.just(movie);
+                            }
+                        }
+                );
             } else {
                 return cache.getMovie(id);
             }

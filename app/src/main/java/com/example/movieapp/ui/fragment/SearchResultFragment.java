@@ -27,8 +27,8 @@ import moxy.presenter.ProvidePresenter;
 public class SearchResultFragment extends MvpAppCompatFragment implements ISearchResultView, BackButtonListener {
 
     private View view;
-    private RecyclerView recyclerView;
-    private SearchResultAdapter adapter;
+    private RecyclerView resulrRecyclerView;
+    private SearchResultAdapter resultAdapter;
 
     @InjectPresenter
     SearchResultPresenter presenter;
@@ -46,24 +46,28 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Logger.logV(null);
         view = inflater.inflate(R.layout.fragment_search_result, container, false);
-        recyclerView = view.findViewById(R.id.rv_search_result);
+        resulrRecyclerView = view.findViewById(R.id.rv_search_result);
         return view;
     }
 
     @Override
     public void init() {
         Logger.logV(null);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        adapter = new SearchResultAdapter(presenter.getPresenter());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        initAdapter();
         Logger.logV("completed");
+    }
+
+    private void initAdapter() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        resultAdapter = new SearchResultAdapter(presenter.getPresenter());
+        resulrRecyclerView.setLayoutManager(layoutManager);
+        resulrRecyclerView.setAdapter(resultAdapter);
     }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void updateData() {
-        adapter.notifyDataSetChanged();
+        resultAdapter.notifyDataSetChanged();
     }
 
     @Override

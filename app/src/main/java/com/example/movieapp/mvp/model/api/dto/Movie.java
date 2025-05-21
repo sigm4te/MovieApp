@@ -56,6 +56,10 @@ public class Movie {
         this.plot = plot;
     }
 
+    public Movie(String message) {
+        this(null, message, null, null, null, null, null, null, null);
+    }
+
     public String getId() {
         return id;
     }

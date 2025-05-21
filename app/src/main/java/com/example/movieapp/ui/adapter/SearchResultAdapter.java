@@ -26,7 +26,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     public SearchResultAdapter(ISearchResultListPresenter presenter) {
         this.presenter = presenter;
-        Logger.logD(null);
+        Logger.logV(null);
     }
 
     @NonNull

@@ -61,6 +61,12 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
     @Override
     public void init() {
         Logger.logV(null);
+        initViews();
+        initListeners();
+        Logger.logV("completed");
+    }
+
+    private void initViews() {
         titleTextView = view.findViewById(R.id.tv_movie_title);
         posterImageView = view.findViewById(R.id.iv_movie_poster);
         typeTextView = view.findViewById(R.id.tv_movie_type);
@@ -69,8 +75,6 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
         directorTextView = view.findViewById(R.id.tv_movie_director);
         ratingTextView = view.findViewById(R.id.tv_movie_rating);
         plotTextView = view.findViewById(R.id.tv_movie_plot);
-        initListeners();
-        Logger.logV("completed");
     }
 
     private void initListeners() {

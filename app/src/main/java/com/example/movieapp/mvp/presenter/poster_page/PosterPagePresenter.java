@@ -31,7 +31,7 @@ public class PosterPagePresenter extends MvpPresenter<IPosterPageView> {
 
     private void setData() {
         Logger.logV(null);
-        getViewState().setImage(imageUrl);
+        getViewState().setData(imageUrl);
     }
 
     public boolean backPressed() {

@@ -1,5 +1,7 @@
 package com.example.movieapp.mvp.model.cache.room;
 
+import static java.util.Collections.emptyList;
+
 import com.example.movieapp.mvp.model.api.dto.SearchResultItem;
 import com.example.movieapp.mvp.model.cache.ISearchCache;
 import com.example.movieapp.mvp.model.database.AppDatabase;
@@ -28,15 +30,19 @@ public class RoomSearchCache implements ISearchCache {
         Logger.logV(null);
         return Single.fromCallable(() -> {
             SearchHistoryEntity searchHistory = db.searchHistoryDao().findByQuery(query);
-            List<String> ids = searchHistory.getIds();
+            if (searchHistory != null) {
+                List<String> ids = searchHistory.getIds();
 
-            List<SearchResultItem> searchResult = new ArrayList<>();
-            for (String id : ids) {
-                SearchResultItem searchResultItem = getSearchResultItem(id);
-                searchResult.add(searchResultItem);
+                List<SearchResultItem> searchResult = new ArrayList<>();
+                for (String id : ids) {
+                    SearchResultItem searchResultItem = getSearchResultItem(id);
+                    searchResult.add(searchResultItem);
+                }
+                return new Search(searchResult, true);
+            } else {
+                return new Search(emptyList(), false);
             }
-            return new Search(searchResult);
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
     @Override

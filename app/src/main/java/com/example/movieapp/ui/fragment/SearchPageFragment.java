@@ -1,5 +1,6 @@
 package com.example.movieapp.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +10,15 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.R;
 import com.example.movieapp.mvp.presenter.search_page.SearchPagePresenter;
 import com.example.movieapp.mvp.view.search_page.ISearchPageView;
 import com.example.movieapp.ui.BackButtonListener;
+import com.example.movieapp.ui.adapter.SearchHistoryAdapter;
 import com.example.movieapp.utils.log.Logger;
 
 import moxy.MvpAppCompatFragment;
@@ -24,7 +28,9 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
 
     private View view;
     private SearchView searchView;
-    private Button button;
+    private Button searchButton;
+    private RecyclerView historyRecyclerView;
+    private SearchHistoryAdapter historyAdapter;
 
     @InjectPresenter
     SearchPagePresenter presenter;
@@ -34,24 +40,36 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Logger.logV(null);
         view = inflater.inflate(R.layout.fragment_search_page, container, false);
+        historyRecyclerView = view.findViewById(R.id.rv_search_history);
         return view;
     }
 
     @Override
     public void init() {
         Logger.logV(null);
-        searchView = view.findViewById(R.id.sv_search);
-        button = view.findViewById(R.id.btn_search);
+        initViews();
+        initAdapter();
         initListeners();
         Logger.logV("completed");
     }
 
+    private void initViews() {
+        searchView = view.findViewById(R.id.sv_search);
+        searchButton = view.findViewById(R.id.btn_search);
+    }
+
+    private void initAdapter() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        historyAdapter = new SearchHistoryAdapter(presenter.getHistoryListPresenter());
+        historyRecyclerView.setLayoutManager(layoutManager);
+        historyRecyclerView.setAdapter(historyAdapter);
+    }
+
     private void initListeners() {
-        button.setOnClickListener((view) -> {
+        searchButton.setOnClickListener((view) -> {
             String query = searchView.getQuery().toString();
             startSearch(query);
         });
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -60,14 +78,25 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String query) {
+                loadHistory(query);
                 return false;
             }
         });
     }
 
     private void startSearch(String query) {
-        presenter.getPresenter().onClick(query);
+        presenter.getSearchButtonPresenter().onClick(query);
+    }
+
+    private void loadHistory(String query) {
+        presenter.getEditTextPresenter().onTextChange(query);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public void updateData() {
+        historyAdapter.notifyDataSetChanged();
     }
 
     @Override

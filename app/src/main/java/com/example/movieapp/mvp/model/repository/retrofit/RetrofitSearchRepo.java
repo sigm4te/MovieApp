@@ -1,5 +1,7 @@
 package com.example.movieapp.mvp.model.repository.retrofit;
 
+import android.annotation.SuppressLint;
+
 import com.example.movieapp.mvp.model.api.IDataSource;
 import com.example.movieapp.mvp.model.api.dto.Search;
 import com.example.movieapp.mvp.model.cache.ISearchCache;
@@ -22,12 +24,21 @@ public class RetrofitSearchRepo implements ISearchRepo {
         this.cache = cache;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public Single<Search> getSearch(String query) {
         Logger.logV(null);
         return networkStatus.isOnlineSingle().flatMap((isOnline) -> {
             if (isOnline) {
-                return api.getSearchResult(query).flatMap((search) -> cache.putSearch(query, search).toSingleDefault(search));
+                return api.getSearchResult(query).flatMap(
+                        (search) -> {
+                            if (search.isSucceeded()) {
+                                return cache.putSearch(query, search).toSingleDefault(search);
+                            } else {
+                                return Single.just(search);
+                            }
+                        }
+                );
             } else {
                 return cache.getSearch(query);
             }

@@ -52,11 +52,15 @@ public class PosterPageFragment extends MvpAppCompatFragment implements IPosterP
     @Override
     public void init() {
         Logger.logV(null);
+        initViews();
+    }
+
+    private void initViews() {
         posterImageView = view.findViewById(R.id.iv_poster);
     }
 
     @Override
-    public void setImage(String imageUrl) {
+    public void setData(String imageUrl) {
         Logger.logV(null);
         imageLoader.loadImage(imageUrl, posterImageView);
     }

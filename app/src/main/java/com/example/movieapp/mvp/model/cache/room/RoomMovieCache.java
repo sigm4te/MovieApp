@@ -11,6 +11,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RoomMovieCache implements IMovieCache {
 
+    private static final String NO_CACHED_RESULT = "No cached result!";
+
     private final AppDatabase db;
 
     public RoomMovieCache(AppDatabase db) {
@@ -21,18 +23,22 @@ public class RoomMovieCache implements IMovieCache {
     public Single<Movie> getMovie(String id) {
         return Single.fromCallable(() -> {
             MovieEntity movieEntity = db.movieDao().findById(id);
-            return new Movie(
-                    movieEntity.getId(),
-                    movieEntity.getTitle(),
-                    movieEntity.getImageUrl(),
-                    movieEntity.getType(),
-                    movieEntity.getYear(),
-                    movieEntity.getCountry(),
-                    movieEntity.getDirector(),
-                    movieEntity.getRating(),
-                    movieEntity.getPlot()
-            );
-        });
+            if (movieEntity != null) {
+                return new Movie(
+                        movieEntity.getId(),
+                        movieEntity.getTitle(),
+                        movieEntity.getImageUrl(),
+                        movieEntity.getType(),
+                        movieEntity.getYear(),
+                        movieEntity.getCountry(),
+                        movieEntity.getDirector(),
+                        movieEntity.getRating(),
+                        movieEntity.getPlot()
+                );
+            } else {
+                return new Movie(NO_CACHED_RESULT);
+            }
+        }).subscribeOn(Schedulers.io());
     }
 
     @Override

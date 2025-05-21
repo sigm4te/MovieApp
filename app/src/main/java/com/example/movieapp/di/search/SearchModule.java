@@ -1,7 +1,9 @@
 package com.example.movieapp.di.search;
 
 import com.example.movieapp.mvp.model.api.IDataSource;
+import com.example.movieapp.mvp.model.cache.IHistoryCache;
 import com.example.movieapp.mvp.model.cache.ISearchCache;
+import com.example.movieapp.mvp.model.cache.room.RoomHistoryCache;
 import com.example.movieapp.mvp.model.cache.room.RoomSearchCache;
 import com.example.movieapp.mvp.model.database.AppDatabase;
 import com.example.movieapp.mvp.model.network.INetworkStatus;
@@ -22,5 +24,10 @@ public class SearchModule {
     @Provides
     ISearchCache searchCache(AppDatabase db) {
         return new RoomSearchCache(db);
+    }
+
+    @Provides
+    IHistoryCache historyCache(AppDatabase db) {
+        return new RoomHistoryCache(db);
     }
 }

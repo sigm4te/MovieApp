@@ -37,4 +37,7 @@ public interface SearchHistoryDao {
 
     @Query("SELECT * FROM search_history WHERE search_query = :query")
     SearchHistoryEntity findByQuery(String query);
+
+    @Query("SELECT * FROM search_history WHERE search_query LIKE :chars ORDER BY search_query")
+    List<SearchHistoryEntity> findByChars(String chars);
 }
