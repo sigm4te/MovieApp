@@ -41,10 +41,6 @@ public class SearchResultItem implements Parcelable {
         this.imageUrl = imageUrl;
     }
 
-    public SearchResultItem(String message) {
-        this(null, message, null, null, null);
-    }
-
     protected SearchResultItem(Parcel in) {
         id = in.readString();
         title = in.readString();
@@ -107,5 +103,11 @@ public class SearchResultItem implements Parcelable {
     @Override
     public String toString() {
         return Converter.toJson(this);
+    }
+
+    public static class NoSearchResultItem extends SearchResultItem {
+        public NoSearchResultItem(String error) {
+            super(null, error, null, null, null);
+        }
     }
 }

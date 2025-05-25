@@ -1,7 +1,5 @@
 package com.example.movieapp.mvp.model.cache.room;
 
-import static java.util.Collections.emptyList;
-
 import com.example.movieapp.mvp.model.api.dto.SearchResultItem;
 import com.example.movieapp.mvp.model.cache.ISearchCache;
 import com.example.movieapp.mvp.model.database.AppDatabase;
@@ -18,6 +16,8 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RoomSearchCache implements ISearchCache {
+
+    private static final String NO_CACHED_RESULT = "No cached result!";
 
     private final AppDatabase db;
 
@@ -38,9 +38,9 @@ public class RoomSearchCache implements ISearchCache {
                     SearchResultItem searchResultItem = getSearchResultItem(id);
                     searchResult.add(searchResultItem);
                 }
-                return new Search(searchResult, true);
+                return new Search.SuccededSearch(searchResult);
             } else {
-                return new Search(emptyList(), false);
+                return new Search.FailedSearch(NO_CACHED_RESULT);
             }
         }).subscribeOn(Schedulers.io());
     }

@@ -117,7 +117,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
                         if (search.isSucceeded()) {
                             searchResultListPresenter.searchResultList.addAll(search.getItems());
                         } else {
-                            searchResultListPresenter.searchResultList.add(new SearchResultItem(search.getError()));
+                            searchResultListPresenter.searchResultList.add(new SearchResultItem.NoSearchResultItem(search.getError()));
                         }
                         getViewState().updateData();
                     },

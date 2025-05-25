@@ -36,7 +36,7 @@ public class RoomMovieCache implements IMovieCache {
                         movieEntity.getPlot()
                 );
             } else {
-                return new Movie(NO_CACHED_RESULT);
+                return new Movie.NoMovie(NO_CACHED_RESULT);
             }
         }).subscribeOn(Schedulers.io());
     }

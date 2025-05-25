@@ -1,5 +1,7 @@
 package com.example.movieapp.mvp.model.api.dto;
 
+import static java.util.Collections.emptyList;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,8 +11,6 @@ public class Search {
 
     private static final String STATUS_SUCCEEDED = "True";
     private static final String STATUS_FAILED = "False";
-    private static final String NO_CACHED_RESULT = "No cached result!";
-    private static final String EMPTY_STRING = "";
 
     @SerializedName("Search")
     @Expose
@@ -28,11 +28,11 @@ public class Search {
     @Expose
     String error;
 
-    public Search(List<SearchResultItem> items, Boolean status) {
+    public Search(List<SearchResultItem> items, String totalResults, String status, String error) {
         this.items = items;
-        this.totalResults = String.valueOf(items.size());
-        this.status = (status) ? STATUS_SUCCEEDED : STATUS_FAILED;
-        this.error = (status) ? EMPTY_STRING : NO_CACHED_RESULT;
+        this.totalResults = totalResults;
+        this.status = status;
+        this.error = error;
     }
 
     public List<SearchResultItem> getItems() {
@@ -49,5 +49,17 @@ public class Search {
 
     public String getError() {
         return error;
+    }
+
+    public static class SuccededSearch extends Search {
+        public SuccededSearch(List<SearchResultItem> items) {
+            super(items, String.valueOf(items.size()), STATUS_SUCCEEDED, null);
+        }
+    }
+
+    public static class FailedSearch extends Search {
+        public FailedSearch(String error) {
+            super(emptyList(), String.valueOf(0), STATUS_FAILED, error);
+        }
     }
 }

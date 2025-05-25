@@ -56,10 +56,6 @@ public class Movie {
         this.plot = plot;
     }
 
-    public Movie(String message) {
-        this(null, message, null, null, null, null, null, null, null);
-    }
-
     public String getId() {
         return id;
     }
@@ -100,5 +96,11 @@ public class Movie {
     @Override
     public String toString() {
         return Converter.toJson(this);
+    }
+
+    public static class NoMovie extends Movie {
+        public NoMovie(String error) {
+            super(null, error, null, null, null, null, null, null, null);
+        }
     }
 }
