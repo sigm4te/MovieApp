@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.movieapp.R;
 import com.example.movieapp.app.MovieApp;
@@ -46,8 +48,9 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
     MoviePagePresenter provideMoviePagePresenter() {
         Logger.logV(null);
         assert getArguments() != null;
-        String id = getArguments().getString(Screens.MOVIE_ID_ARG);
-        return new MoviePagePresenter(id);
+        String title = getArguments().getString(Screens.MOVIE_PAGE_TITLE);
+        String id = getArguments().getString(Screens.MOVIE_PAGE_ID);
+        return new MoviePagePresenter(title, id);
     }
 
     @Nullable
@@ -84,8 +87,9 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
     }
 
     @Override
-    public void setData(MovieViewModel movie) {
-        Logger.logD(String.format("name = %s", movie.name));
+    public void setData(String title, MovieViewModel movie) {
+        Logger.logD(String.format("name = %s", title));
+        updateToolbar(title);
         titleTextView.setText(movie.name);
         imageLoader.loadImage(movie.imageUrl, posterImageView);
         typeTextView.setText(movie.type);
@@ -94,6 +98,13 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
         directorTextView.setText(movie.director);
         ratingTextView.setText(movie.rating);
         plotTextView.setText(movie.plot);
+    }
+
+    private void updateToolbar(String title) {
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle(title);
+        actionBar.setSubtitle(R.string.toolbar_subtitle_movie);
     }
 
     @Override

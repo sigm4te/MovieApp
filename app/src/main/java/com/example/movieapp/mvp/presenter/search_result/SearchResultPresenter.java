@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 
 import com.example.movieapp.app.MovieApp;
-import com.example.movieapp.mvp.model.repository.ISearchRepo;
 import com.example.movieapp.mvp.model.api.dto.SearchResultItem;
+import com.example.movieapp.mvp.model.repository.ISearchRepo;
 import com.example.movieapp.mvp.presenter.base.ViewModelMapper;
 import com.example.movieapp.mvp.presenter.search_result.list.ISearchResultListPresenter;
 import com.example.movieapp.mvp.view.search_result.ISearchResultView;
@@ -52,7 +52,8 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
             Logger.logD(String.format("index = %s", index));
             String id = searchResultList.get(index).getId();
             if (id != null) {
-                router.navigateTo(new Screens.MoviePageScreen(id));
+                String title = searchResultList.get(index).getTitle();
+                router.navigateTo(new Screens.MoviePageScreen(title, id));
             }
         }
 
@@ -119,13 +120,13 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> {
                         } else {
                             searchResultListPresenter.searchResultList.add(new SearchResultItem.NoSearchResultItem(search.getError()));
                         }
-                        getViewState().updateData();
+                        getViewState().setData(query);
                     },
                     (e) -> {
                         Logger.logE(String.format("error = %s", e.getMessage()));
                     }
             );
-            getViewState().updateData();
+            getViewState().setData(query);
         }
     }
 

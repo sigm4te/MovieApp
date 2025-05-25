@@ -85,6 +85,7 @@ public class SearchPagePresenter extends MvpPresenter<ISearchPageView> {
         Logger.logV(null);
         super.onFirstViewAttach();
         getViewState().init();
+        getViewState().setData();
     }
 
     @Override
@@ -105,14 +106,14 @@ public class SearchPagePresenter extends MvpPresenter<ISearchPageView> {
                         if (!search.isEmpty()) {
                             searchHistoryListPresenter.searchHistoryList.addAll(search);
                         }
-                        getViewState().updateData();
+                        getViewState().setHistoryData();
                     },
                     (e) -> {
                         Logger.logE(String.format("error = %s", e.getMessage()));
                     }
             );
         }
-        getViewState().updateData();
+        getViewState().setHistoryData();
     }
 
     public ISearchPageButtonPresenter getSearchButtonPresenter() {

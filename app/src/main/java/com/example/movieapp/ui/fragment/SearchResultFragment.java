@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.R;
+import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.mvp.presenter.search_result.SearchResultPresenter;
 import com.example.movieapp.mvp.view.search_result.ISearchResultView;
 import com.example.movieapp.navigation.Screens;
@@ -27,7 +29,7 @@ import moxy.presenter.ProvidePresenter;
 public class SearchResultFragment extends MvpAppCompatFragment implements ISearchResultView, BackButtonListener {
 
     private View view;
-    private RecyclerView resulrRecyclerView;
+    private RecyclerView resultRecyclerView;
     private SearchResultAdapter resultAdapter;
 
     @InjectPresenter
@@ -37,7 +39,7 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     SearchResultPresenter provideSearchResultPresenter() {
         Logger.logV(null);
         assert getArguments() != null;
-        String query = getArguments().getString(Screens.QUERY_STRING_ARG);
+        String query = getArguments().getString(Screens.SEARCH_RESULT_QUERY);
         return new SearchResultPresenter(query);
     }
 
@@ -46,7 +48,7 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Logger.logV(null);
         view = inflater.inflate(R.layout.fragment_search_result, container, false);
-        resulrRecyclerView = view.findViewById(R.id.rv_search_result);
+        resultRecyclerView = view.findViewById(R.id.rv_search_result);
         return view;
     }
 
@@ -60,14 +62,22 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     private void initAdapter() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         resultAdapter = new SearchResultAdapter(presenter.getPresenter());
-        resulrRecyclerView.setLayoutManager(layoutManager);
-        resulrRecyclerView.setAdapter(resultAdapter);
+        resultRecyclerView.setLayoutManager(layoutManager);
+        resultRecyclerView.setAdapter(resultAdapter);
     }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void updateData() {
+    public void setData(String query) {
+        updateToolbar(query);
         resultAdapter.notifyDataSetChanged();
+    }
+
+    private void updateToolbar(String query) {
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle(query);
+        actionBar.setSubtitle(getString(R.string.toolbar_subtitle_search));
     }
 
     @Override

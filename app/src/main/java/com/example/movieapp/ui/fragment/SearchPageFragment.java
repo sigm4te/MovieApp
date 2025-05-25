@@ -5,21 +5,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.R;
+import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.mvp.presenter.search_page.SearchPagePresenter;
 import com.example.movieapp.mvp.view.search_page.ISearchPageView;
 import com.example.movieapp.ui.BackButtonListener;
 import com.example.movieapp.ui.adapter.SearchHistoryAdapter;
 import com.example.movieapp.utils.log.Logger;
+import com.google.android.material.button.MaterialButton;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
@@ -28,7 +30,7 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
 
     private View view;
     private SearchView searchView;
-    private Button searchButton;
+    private MaterialButton searchButton;
     private RecyclerView historyRecyclerView;
     private SearchHistoryAdapter historyAdapter;
 
@@ -85,6 +87,18 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
         });
     }
 
+    @Override
+    public void setData() {
+        updateToolbar();
+    }
+
+    private void updateToolbar() {
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle(getString(R.string.toolbar_title_main));
+        actionBar.setSubtitle(getString(R.string.toolbar_subtitle_main));
+    }
+
     private void startSearch(String query) {
         presenter.getSearchButtonPresenter().onClick(query);
     }
@@ -95,7 +109,7 @@ public class SearchPageFragment extends MvpAppCompatFragment implements ISearchP
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void updateData() {
+    public void setHistoryData() {
         historyAdapter.notifyDataSetChanged();
     }
 

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.R;
+import com.example.movieapp.app.MovieApp;
 import com.example.movieapp.mvp.presenter.base.MainPresenter;
 import com.example.movieapp.mvp.view.base.IMainView;
 import com.example.movieapp.utils.log.Logger;
@@ -33,14 +33,14 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView {
     protected void onCreate(Bundle savedInstanceState) {
         Logger.logV(null);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         initToolbar();
         initNavigator();
-        setContentView(R.layout.activity_main);
         MovieApp.instance.getAppComponent().inject(this);
     }
 
     private void initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        Toolbar toolbar = findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
     }
 

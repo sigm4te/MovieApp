@@ -14,9 +14,11 @@ public class PosterPagePresenter extends MvpPresenter<IPosterPageView> {
     @Inject
     Router router;
 
+    private final String title;
     private final String imageUrl;
 
-    public PosterPagePresenter(String imageUrl) {
+    public PosterPagePresenter(String title, String imageUrl) {
+        this.title = title;
         this.imageUrl = imageUrl;
         MovieApp.instance.getMovieSubcomponent().inject(this);
     }
@@ -31,7 +33,7 @@ public class PosterPagePresenter extends MvpPresenter<IPosterPageView> {
 
     private void setData() {
         Logger.logV(null);
-        getViewState().setData(imageUrl);
+        getViewState().setData(title, imageUrl);
     }
 
     public boolean backPressed() {

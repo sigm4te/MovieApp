@@ -25,9 +25,11 @@ public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
     IMovieRepo movieRepo;
 
     private final String id;
+    private final String title;
     private String imageUrl;
 
-    public MoviePagePresenter(String id) {
+    public MoviePagePresenter(String title, String id) {
+        this.title = title;
         this.id = id;
         MovieApp.instance.getMovieSubcomponent().inject(this);
     }
@@ -52,7 +54,7 @@ public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
         Logger.logV(null);
         movieRepo.getMovie(id).observeOn(scheduler).subscribe(
                 (movie) -> {
-                    getViewState().setData(ViewModelMapper.mapMovie(movie));
+                    getViewState().setData(title, ViewModelMapper.mapMovie(movie));
                     imageUrl = movie.getImageUrl();
                 },
                 (e) -> {
@@ -63,7 +65,7 @@ public class MoviePagePresenter extends MvpPresenter<IMoviePageView> {
 
     public void onImageClick() {
         if (imageUrl != null) {
-            router.navigateTo(new Screens.PosterPageScreen(imageUrl));
+            router.navigateTo(new Screens.PosterPageScreen(title, imageUrl));
         }
     }
 

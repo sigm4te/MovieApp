@@ -1,11 +1,15 @@
 <resources>
     <!-- Application -->
     <string name="app_name">MovieApp</string>
-
+    <!-- Toolbar -->
+    <string name="toolbar_title_main" />
+    <string name="toolbar_subtitle_main" />
+    <string name="toolbar_subtitle_search">Search Result</string>
+    <string name="toolbar_subtitle_movie">Movie</string>
+    <string name="toolbar_subtitle_poster">Poster</string>
     <!-- Search Page -->
     <string name="search_page_label">Enter a movie name:</string>
     <string name="search_page_button">Search</string>
-
     <!-- Search Result / Movie Page / Poster Page -->
     <string name="movie_page_title_label">Title</string>
     <string name="movie_page_poster_label">Poster</string>

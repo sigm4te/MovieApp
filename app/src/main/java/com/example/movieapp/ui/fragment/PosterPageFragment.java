@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.movieapp.R;
 import com.example.movieapp.app.MovieApp;
@@ -37,8 +39,9 @@ public class PosterPageFragment extends MvpAppCompatFragment implements IPosterP
     PosterPagePresenter providePosterPagePresenter() {
         Logger.logV(null);
         assert getArguments() != null;
-        String imageUrl = getArguments().getString(Screens.POSTER_URL_ARG);
-        return new PosterPagePresenter(imageUrl);
+        String title = getArguments().getString(Screens.POSTER_PAGE_TITLE);
+        String imageUrl = getArguments().getString(Screens.POSTER_PAGE_URL);
+        return new PosterPagePresenter(title, imageUrl);
     }
 
     @Nullable
@@ -53,6 +56,7 @@ public class PosterPageFragment extends MvpAppCompatFragment implements IPosterP
     public void init() {
         Logger.logV(null);
         initViews();
+        Logger.logV("completed");
     }
 
     private void initViews() {
@@ -60,9 +64,17 @@ public class PosterPageFragment extends MvpAppCompatFragment implements IPosterP
     }
 
     @Override
-    public void setData(String imageUrl) {
+    public void setData(String title, String imageUrl) {
         Logger.logV(null);
+        updateToolbar(title);
         imageLoader.loadImage(imageUrl, posterImageView);
+    }
+
+    private void updateToolbar(String title) {
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle(title);
+        actionBar.setSubtitle(getString(R.string.toolbar_subtitle_poster));
     }
 
     @Override

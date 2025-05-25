@@ -6,6 +6,6 @@ import moxy.viewstate.strategy.alias.AddToEndSingle;
 @AddToEndSingle
 public interface IMoviePageView extends MvpView {
     void init();
-    void setData(MovieViewModel movie);
+    void setData(String title, MovieViewModel movie);
     void release();
 }
