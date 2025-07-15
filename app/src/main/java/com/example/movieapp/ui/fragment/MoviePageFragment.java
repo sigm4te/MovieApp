@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -90,14 +91,18 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
     public void setData(String title, MovieViewModel movie) {
         Logger.logD(String.format("name = %s", title));
         updateToolbar(title);
-        titleTextView.setText(movie.name);
-        imageLoader.loadImage(movie.imageUrl, posterImageView);
-        typeTextView.setText(movie.type);
-        yearTextView.setText(movie.year);
-        countryTextView.setText(movie.country);
-        directorTextView.setText(movie.director);
-        ratingTextView.setText(movie.rating);
-        plotTextView.setText(movie.plot);
+        if (movie.id == null) {
+            showToast(movie.name);
+        } else {
+            titleTextView.setText(movie.name);
+            imageLoader.loadImage(movie.imageUrl, posterImageView);
+            typeTextView.setText(movie.type);
+            yearTextView.setText(movie.year);
+            countryTextView.setText(movie.country);
+            directorTextView.setText(movie.director);
+            ratingTextView.setText(movie.rating);
+            plotTextView.setText(movie.plot);
+        }
     }
 
     private void updateToolbar(String title) {
@@ -105,6 +110,10 @@ public class MoviePageFragment extends MvpAppCompatFragment implements IMoviePag
         assert actionBar != null;
         actionBar.setTitle(title);
         actionBar.setSubtitle(R.string.toolbar_subtitle_movie);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

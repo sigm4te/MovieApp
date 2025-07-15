@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,10 +70,18 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         @Override
         public void setData(SearchResultItemViewModel searchResultItem) {
-            titleView.setText(searchResultItem.title);
-            typeView.setText(searchResultItem.type);
-            yearView.setText(searchResultItem.year);
-            imageLoader.loadImage(searchResultItem.imageUrl, imageView);
+            if (searchResultItem.id == null) {
+                showToast(searchResultItem.title);
+            } else {
+                titleView.setText(searchResultItem.title);
+                typeView.setText(searchResultItem.type);
+                yearView.setText(searchResultItem.year);
+                imageLoader.loadImage(searchResultItem.imageUrl, imageView);
+            }
+        }
+
+        private void showToast(String message) {
+            Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
         }
 
         @Override
