@@ -7,6 +7,10 @@
     <string name="toolbar_subtitle_search">Search Result</string>
     <string name="toolbar_subtitle_movie">Movie</string>
     <string name="toolbar_subtitle_poster">Poster</string>
+    <!-- Menu -->
+    <string name="menu_item_search">Search</string>
+    <string name="menu_item_favorites">Favorites</string>
+    <string name="menu_item_settings">Settings</string>
     <!-- Search Page -->
     <string name="search_page_label">Enter a movie name:</string>
     <string name="search_page_button">Search</string>

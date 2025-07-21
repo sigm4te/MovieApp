@@ -14,6 +14,7 @@ import com.example.movieapp.utils.log.Logger;
 import com.github.terrakok.cicerone.Navigator;
 import com.github.terrakok.cicerone.NavigatorHolder;
 import com.github.terrakok.cicerone.androidx.AppNavigator;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
 
@@ -35,6 +36,7 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initToolbar();
+        initBottomNavigation();
         initNavigator();
         MovieApp.instance.getAppComponent().inject(this);
     }
@@ -42,6 +44,29 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView {
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
+    }
+
+    private void initBottomNavigation() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bnv_main);
+        bottomNavigationView.setOnItemSelectedListener((item) -> {
+            if (item.getItemId() == R.id.bnv_main_item_search && !item.isChecked()) {
+                Logger.logD(String.format("menu item = %s", item.getTitle()));
+                // action
+                item.setChecked(true);
+                return true;
+            } else if (item.getItemId() == R.id.bnv_main_item_favorites && !item.isChecked()) {
+                Logger.logD(String.format("menu item = %s", item.getTitle()));
+                // action
+                item.setChecked(true);
+                return true;
+            } else if (item.getItemId() == R.id.bnv_main_item_settings && !item.isChecked()) {
+                Logger.logD(String.format("menu item = %s", item.getTitle()));
+                // action
+                item.setChecked(true);
+                return true;
+            }
+            return false;
+        });
     }
 
     private void initNavigator() {
